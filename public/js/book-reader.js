@@ -9,6 +9,70 @@ let readingHistory = JSON.parse(localStorage.getItem('readingHistory') || '{}');
 let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
 let settings = JSON.parse(localStorage.getItem('readerSettings') || '{}');
 
+// Données de démonstration pour GitHub Pages (quand pas de serveur)
+const demoData = {
+    "naruto": {
+        "info": {
+            "name": "Naruto",
+            "description": "L'histoire d'un ninja déterminé"
+        },
+        "scans": [
+            {
+                "chapter": "Chapitre 1",
+                "page": 1,
+                "image": "https://via.placeholder.com/400x600/FF6B35/FFFFFF?text=Naruto+Ch.1+P.1",
+                "url": "#"
+            },
+            {
+                "chapter": "Chapitre 1", 
+                "page": 2,
+                "image": "https://via.placeholder.com/400x600/FF6B35/FFFFFF?text=Naruto+Ch.1+P.2",
+                "url": "#"
+            },
+            {
+                "chapter": "Chapitre 2",
+                "page": 1,
+                "image": "https://via.placeholder.com/400x600/FF6B35/FFFFFF?text=Naruto+Ch.2+P.1",
+                "url": "#"
+            }
+        ]
+    },
+    "onepiece": {
+        "info": {
+            "name": "One Piece",
+            "description": "L'aventure des pirates du chapeau de paille"
+        },
+        "scans": [
+            {
+                "chapter": "Chapitre 1",
+                "page": 1,
+                "image": "https://via.placeholder.com/400x600/4ECDC4/FFFFFF?text=One+Piece+Ch.1+P.1",
+                "url": "#"
+            },
+            {
+                "chapter": "Chapitre 1",
+                "page": 2,
+                "image": "https://via.placeholder.com/400x600/4ECDC4/FFFFFF?text=One+Piece+Ch.1+P.2",
+                "url": "#"
+            }
+        ]
+    },
+    "demonslayer": {
+        "info": {
+            "name": "Demon Slayer",
+            "description": "Les chasseurs de démons"
+        },
+        "scans": [
+            {
+                "chapter": "Chapitre 1",
+                "page": 1,
+                "image": "https://via.placeholder.com/400x600/FF6B6B/FFFFFF?text=Demon+Slayer+Ch.1+P.1",
+                "url": "#"
+            }
+        ]
+    }
+};
+
 // Configuration par défaut
 const defaultSettings = {
     darkMode: false,
@@ -112,21 +176,41 @@ async function loadMangaLibrary() {
     try {
         console.log('📚 Chargement de la bibliothèque...');
         
-        const response = await fetch('/api/scans/popular?maxChaptersPerManga=5&maxPagesPerChapter=15');
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP: ${response.status}`);
+        // Tenter de charger depuis l'API (serveur local)
+        try {
+            const response = await fetch('/api/scans/popular?maxChaptersPerManga=5&maxPagesPerChapter=15');
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    mangasLibrary = data.data;
+                    displayMangaLibrary();
+                    updateLibraryStats();
+                    console.log('✅ Bibliothèque chargée depuis API:', Object.keys(mangasLibrary).length, 'mangas');
+                    return;
+                }
+            }
+        } catch (apiError) {
+            console.log('ℹ️ API non disponible, utilisation des données de démo...');
         }
         
-        const data = await response.json();
-        if (!data.success) {
-            throw new Error(data.error || 'Erreur API');
-        }
-        
-        mangasLibrary = data.data;
+        // Fallback vers les données de démo (GitHub Pages)
+        mangasLibrary = demoData;
         displayMangaLibrary();
         updateLibraryStats();
         
-        console.log('✅ Bibliothèque chargée:', Object.keys(mangasLibrary).length, 'mangas');
+        console.log('✅ Bibliothèque démo chargée:', Object.keys(mangasLibrary).length, 'mangas');
+        
+        // Afficher un message d'information
+        const container = document.getElementById('manga-library');
+        const demoNotice = document.createElement('div');
+        demoNotice.className = 'demo-notice';
+        demoNotice.innerHTML = `
+            <div style="background: rgba(255, 193, 7, 0.1); border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; text-align: center;">
+                <strong>📋 Mode Démonstration</strong><br>
+                <small>Vous visualisez des données de test. Pour l'expérience complète, clonez le repository et lancez le serveur local.</small>
+            </div>
+        `;
+        container.parentNode.insertBefore(demoNotice, container);
         
     } catch (error) {
         console.error('❌ Erreur lors du chargement:', error);
