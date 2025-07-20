@@ -1,123 +1,88 @@
-# 🎌 Scrananime - Lecteur de Manga Moderne
-
-Un lecteur de manga en ligne avec interface livre, développé en Node.js et vanilla JavaScript.
-
-![Scrananime](https://img.shields.io/badge/Version-2.0.0-blue.svg)
-![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)
-![Express](https://img.shields.io/badge/Express-4.x-red.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
-
-## 🚀 Installation Rapide
-
-```bash
-# Cloner le repository
-git clone https://github.com/Lucas-tsl/scrananime.git
-cd scrananime
-
-# Installer les dépendances
-npm install
-
-# Démarrer le serveur
-npm start
+# 📚 Scraper Animé - Lecteur de Mangas en LigneUne application web moderne pour scraper et afficher les scans d'animés avec une interface de lecture type livre.## 🌐 Démos En Ligne- **Production (Vercel)** : [scrap-anime-l2ondhrc7-lucas-tsls-projects.vercel.app](https://scrap-anime-l2ondhrc7-lucas-tsls-projects.vercel.app)- **GitHub Pages (Demo)** : [lucas-tsl.github.io/scrananime](https://lucas-tsl.github.io/scrananime)## ✨ Fonctionnalités### 🎯 Scraping Intelligent- Support de 6 mangas populaires : One Piece, Naruto, Dragon Ball Super, My Hero Academia, Jujutsu Kaisen, Demon Slayer- Limitation configurable du nombre de chapitres scrapés- Cache automatique pour des performances optimales- API RESTful pour l'intégration### 📖 Interface de Lecture- **Mode Livre** : Expérience de lecture immersive- Navigation fluide entre les pages et chapitres- Interface responsive pour tous les appareils- Design moderne et épuré### ⚙️ Paramètres Avancés (20+ Options)#### 🎨 Apparence- Thèmes sombre/clair avec basculement automatique- Ajustement de la luminosité et du contraste- Personnalisation des couleurs d'interface#### 📚 Lecture- Sens de lecture (gauche-droite / droite-gauche)- Mode plein écran automatique- Zoom et ajustement des images#### 🖼️ Images- Qualité d'affichage configurable- Préchargement intelligent- Compression adaptive#### ⚡ Performance- Gestion du cache navigateur- Optimisation de la bande passante- Préchargement des chapitres#### ⌨️ Raccourcis Clavier- Navigation rapide (flèches, espace, etc.)- Raccourcis personnalisables- Mode navigation avancée#### 💾 Gestion des Données- Synchronisation des préférences- Sauvegarde automatique des positions de lecture- Export/Import des paramètres#### ❓ Aide & Support- Guide d'utilisation intégré- FAQ interactive- Informations de version## 🛠️ Technologies### Backend- **Node.js** + **Express.js** (Serverless sur Vercel)- **Cheerio** pour le parsing HTML- **Puppeteer** pour le contenu dynamique- **DirectAnimeSamaScraper** personnalisé### Frontend- **HTML5** / **CSS3** / **JavaScript ES6+**- Design responsive avec CSS Grid/Flexbox- Interface utilisateur moderne et intuitive### Sécurité & Performance- **Helmet.js** pour les en-têtes de sécurité- **CORS** configuré- Rate limiting intégré- Cache intelligent multi-niveaux## 🚀 Déploiement### Vercel (Production)```bash# Installation et connexionnpm install -g vercelvercel login# Déploiementvercel --prod```### Local```bash# Installation des dépendancesnpm install# Démarrage du serveur de développementnpm start# L'application sera accessible sur http://localhost:3000```## 📁 Structure du Projet```📦 scrap-anime/├── 📂 api/│   └── index.js              # Fonction serverless Vercel├── 📂 css/│   └── reader.css           # Styles unifiés├── 📂 js/│   └── book-reader.js       # Logique frontend├── 📂 lib/│   └── DirectAnimeSamaScraper.js # Scraper personnalisé├── 📄 book.html             # Interface principale├── 📄 server.js             # Serveur Express local├── 📄 vercel.json           # Configuration Vercel└── 📄 package.json          # Dépendances et scripts```## 🔧 Configuration### Variables d'Environnement```envNODE_ENV=production           # Environnement
+RATE_LIMIT=100               # Limite de requêtes par IP
+CACHE_DURATION=3600          # Durée du cache (secondes)
 ```
 
-**Accès** : http://localhost:3000ime Scans Reader - Version Épurée
-
-## 📋 Description
-
-Application web minimaliste et optimisée pour lire des scans de manga en mode livre avec une expérience utilisateur fluide.
-
-## � Démarrage rapide
-
-```bash
-# Installation des dépendances
-npm install
-
-# Démarrage du serveur
-npm start
-
-# Mode développement
-npm run dev
+### Paramètres du Scraper
+```javascript
+// Configuration dans DirectAnimeSamaScraper.js
+const MANGAS = {
+  'one-piece': { limit: 50, priority: 'high' },
+  'naruto': { limit: 30, priority: 'medium' },
+  // ... autres mangas
+};
 ```
 
-**Accès** : http://localhost:3000
+## 📊 API Endpoints
 
-## � Structure épurée
+### GET `/api/scrap`
+Récupère les derniers chapitres de tous les mangas.
 
+**Réponse :**
+```json
+{
+  "success": true,
+  "data": {
+    "one-piece": [
+      {
+        "title": "Chapitre 1105",
+        "url": "https://...",
+        "image": "https://...",
+        "date": "2025-07-20"
+      }
+    ]
+  },
+  "timestamp": "2025-07-20T10:30:00Z"
+}
 ```
-anime-scans-reader/
-├── server.js                 # Serveur Express optimisé
-├── package.json              # Dépendances minimales
-├── public/
-│   ├── book.html            # Interface principale
-│   ├── css/
-│   │   └── reader.css       # Styles unifiés
-│   └── js/
-│       └── book-reader.js   # Logique complète
-└── scrapers/
-    └── DirectAnimeSamaScraper.js  # Scraper optimisé
-```
 
-## ✨ Fonctionnalités
+### GET `/health`
+Vérification de l'état du service.
 
-### 📚 **Interface Livre**
-- Navigation par onglets (Bibliothèque, Lecture, Favoris, Paramètres)
-- Grille de mangas avec progression
-- Système de favoris intégré
+## 🎯 Roadmap
 
-### 📖 **Lecteur Avancé**
-- Mode plein écran immersif
-- Navigation clavier (flèches, espace, F, C, Escape)
-- Chapitres organisés avec sidebar
-- Zoom et luminosité ajustables
-- Sauvegarde automatique de progression
+- [ ] 🔐 Authentification utilisateur
+- [ ] 📱 Application mobile (PWA)
+- [ ] 🌍 Support multilingue
+- [ ] 📺 Mode présentaion/diaporama
+- [ ] 🔔 Notifications de nouveaux chapitres
+- [ ] 👥 Fonctionnalités sociales (favoris, commentaires)
 
-### 🎯 **Optimisations**
-- Cache intelligent (30 minutes)
-- API REST minimaliste
-- Code épuré et performances optimisées
-- Accessibilité complète
+## 📝 Changelog
 
-## 🌐 API Endpoints
+### v2.0.0 (2025-07-20)
+- 🚀 Déploiement Vercel serverless
+- ⚙️ Page de paramètres avancés (20+ options)
+- 🧹 Refactorisation complète (-75% de fichiers)
+- 📱 Interface responsive améliorée
 
-- `GET /` → Redirection vers l'interface
-- `GET /api/scans/popular` → Mangas populaires
-- `GET /api/search?q=term` → Recherche
-- `GET /health` → État du serveur
-- `POST /api/cache/clear` → Vider le cache
+### v1.0.0 (2025-07-15)
+- 🎉 Version initiale
+- 📖 Interface de lecture livre
+- 🔍 Scraper DirectAnimeSama
+- 🎨 Design moderne
 
-## 🎮 Raccourcis clavier
+## 🤝 Contribution
 
-| Touche | Action |
-|--------|--------|
-| ← / ↑ | Page précédente |
-| → / ↓ / Espace | Page suivante |
-| F | Basculer plein écran |
-| C | Ouvrir/fermer chapitres |
-| Escape | Fermer le lecteur |
+1. **Fork** le projet
+2. Créer une **branche feature** (`git checkout -b feature/AmazingFeature`)
+3. **Commit** les changements (`git commit -m 'Add: Amazing Feature'`)
+4. **Push** vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrir une **Pull Request**
 
-## � Mangas disponibles
+## 📄 Licence
 
-- **Naruto** (700+ chapitres)
-- **One Piece** (1100+ chapitres)
-- **Demon Slayer** (205 chapitres)
-- **My Hero Academia** (400+ chapitres)
-- **Attack on Titan** (139 chapitres)
-- **Dragon Ball** (519 chapitres)
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
-## 🔧 Technologies
+## 🙏 Remerciements
 
-- **Backend** : Node.js + Express
-- **Frontend** : HTML5 + CSS3 + JavaScript vanilla
-- **Scraping** : Cheerio
-- **Cache** : Mémoire (30 min)
-
-## � Données sauvegardées
-
-- Historique de lecture (localStorage)
-- Favoris (localStorage)
-- Paramètres utilisateur (localStorage)
+- **DirectAnimeSama** pour les sources de contenu
+- **Vercel** pour l'hébergement serverless
+- **GitHub** pour l'hébergement du code et Pages
+- La communauté **Node.js** pour les outils exceptionnels
 
 ---
 
-**🎌 Application prête à l'emploi !** Interface moderne, code épuré, performances optimisées.
+**💡 Note** : Cette application est à des fins éducatives. Respectez les droits d'auteur et les conditions d'utilisation des sites scrapés.
+
+**🌟 Astuce** : Utilisez les raccourcis clavier pour une navigation rapide !
