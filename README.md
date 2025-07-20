@@ -135,7 +135,8 @@ npm start
 - **API endpoint** : https://anime-reader-9ct5w8ss5-lucas-tsls-projects.vercel.app/api/mangas
 - **Health check** : https://anime-reader-9ct5w8ss5-lucas-tsls-projects.vercel.app/health
 
-## 📁 Structure du Projet```📦 scrap-anime/├── 📂 api/│   └── index.js              # Fonction serverless Vercel├── 📂 css/│   └── reader.css           # Styles unifiés├── 📂 js/│   └── book-reader.js       # Logique frontend├── 📂 lib/│   └── DirectAnimeSamaScraper.js # Scraper personnalisé├── 📄 book.html             # Interface principale├── 📄 server.js             # Serveur Express local├── 📄 vercel.json           # Configuration Vercel└── 📄 package.json          # Dépendances et scripts```## 🔧 Configuration### Variables d'Environnement```envNODE_ENV=production           # Environnement
+## 📁 Structure du Projet
+```📦 scrap-anime/├── 📂 api/│   └── index.js              # Fonction serverless Vercel├── 📂 css/│   └── reader.css           # Styles unifiés├── 📂 js/│   └── book-reader.js       # Logique frontend├── 📂 lib/│   └── DirectAnimeSamaScraper.js # Scraper personnalisé├── 📄 book.html             # Interface principale├── 📄 server.js             # Serveur Express local├── 📄 vercel.json           # Configuration Vercel└── 📄 package.json          # Dépendances et scripts```## 🔧 Configuration### Variables d'Environnement```envNODE_ENV=production           # Environnement
 RATE_LIMIT=100               # Limite de requêtes par IP
 CACHE_DURATION=3600          # Durée du cache (secondes)
 ```
