@@ -1,0 +1,1127 @@
+/* ===== READER CSS - Mode Livre pour Mangas ===== */
+
+/* Variables CSS globales */
+:root {
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --text-primary: #2d3748;
+    --text-secondary: #718096;
+    --background-color: #ffffff;
+    --border-color: #e2e8f0;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+}
+
+/* Reset et base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--background-color);
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Boutons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 2px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Accessibilité */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Header principal */
+.main-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-brand h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.header-brand p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 0.9rem;
+}
+
+.header-nav {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.nav-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.nav-btn.active {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Contenu principal */
+.main-content {
+    min-height: calc(100vh - 100px);
+    background: #f8fafc;
+}
+
+.tab-content {
+    display: none;
+    padding: 2rem 0;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Bibliothèque */
+.library-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.library-header h2 {
+    margin: 0;
+    color: #1e293b;
+    font-size: 1.8rem;
+}
+
+.library-stats {
+    display: flex;
+    gap: 1rem;
+}
+
+.stat-item {
+    background: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #64748b;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.library-filters {
+    display: flex;
+    gap: 1rem;
+}
+
+.filter-select {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* Grille de mangas */
+.manga-library {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.loading-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: #64748b;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e2e8f0;
+    border-top: 3px solid #6366f1;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.manga-book {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.manga-book:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.manga-cover {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.manga-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.manga-book:hover .manga-cover img {
+    transform: scale(1.05);
+}
+
+.manga-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+.manga-info {
+    padding: 1rem;
+}
+
+.manga-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+    color: #1e293b;
+}
+
+.manga-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.manga-progress {
+    background: #f1f5f9;
+    height: 4px;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.manga-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background: #6366f1;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5856eb;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+}
+
+.btn-secondary:hover {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+/* ===== READER MODE LIVRE ===== */
+.book-reader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-reader.hidden {
+    display: none;
+}
+
+.reader-header {
+    background: #2d2d2d;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #404040;
+}
+
+.reader-controls-left,
+.reader-controls-right {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.reader-title {
+    text-align: center;
+    flex: 1;
+}
+
+.reader-title h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.reader-title span {
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.reader-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.reader-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.reader-content {
+    flex: 1;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Sidebar des chapitres */
+.chapter-sidebar {
+    width: 300px;
+    background: #2d2d2d;
+    border-right: 1px solid #404040;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+}
+
+.chapter-sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    padding: 1rem;
+    border-bottom: 1px solid #404040;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.close-sidebar {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.chapters-navigation {
+    padding: 1rem;
+}
+
+.chapter-nav-item {
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: white;
+}
+
+.chapter-nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.chapter-nav-item.active {
+    background: #6366f1;
+}
+
+/* Zone de lecture */
+.reading-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.page-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.manga-page {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.page-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    display: none;
+}
+
+.page-loading.active {
+    display: block;
+}
+
+/* Navigation des pages */
+.page-navigation {
+    background: #2d2d2d;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #404040;
+}
+
+.nav-page-btn {
+    background: #6366f1;
+    border: none;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-page-btn:hover:not(:disabled) {
+    background: #5856eb;
+    transform: translateY(-2px);
+}
+
+.nav-page-btn:disabled {
+    background: #404040;
+    color: #666;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.page-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    min-width: 200px;
+}
+
+#page-counter {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.progress-bar {
+    width: 200px;
+    height: 6px;
+    background: #404040;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.chapter-selector select {
+    background: #404040;
+    border: 1px solid #666;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+/* Overlay des paramètres */
+.reader-settings-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 350px;
+    height: 100%;
+    background: rgba(45, 45, 45, 0.95);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+}
+
+.reader-settings-overlay.open {
+    transform: translateX(0);
+}
+
+.settings-panel {
+    padding: 2rem;
+    color: white;
+}
+
+.settings-panel h4 {
+    margin: 0 0 1.5rem;
+    font-size: 1.2rem;
+}
+
+.setting-row {
+    margin-bottom: 1.5rem;
+}
+
+.setting-row label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.setting-row select,
+.setting-row input[type="range"] {
+    width: 100%;
+    padding: 0.5rem;
+    background: #404040;
+    border: 1px solid #666;
+    border-radius: 6px;
+    color: white;
+}
+
+/* Paramètres généraux */
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+.setting-group {
+    background: var(--card-bg, #f8f9fa);
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px solid var(--border-color, #e9ecef);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.setting-group:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.setting-group-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--accent-color, #007bff);
+}
+
+.setting-group-header h3 {
+    color: var(--accent-color, #007bff);
+    margin: 0 0 8px 0;
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.setting-group-header p {
+    margin: 0;
+    color: var(--text-muted, #6c757d);
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-light, #f0f0f0);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.setting-item:hover {
+    background: var(--hover-bg, rgba(0,123,255,0.05));
+    margin: 0 -10px;
+    padding: 15px 10px;
+    border-radius: 8px;
+}
+
+.setting-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.setting-label {
+    font-weight: 500;
+    color: var(--text-primary, #333);
+    font-size: 1em;
+}
+
+.setting-description {
+    color: var(--text-muted, #6c757d);
+    font-size: 0.85em;
+    line-height: 1.3;
+}
+
+.toggle-switch {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    background: var(--switch-bg, #ccc);
+    border-radius: 24px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    appearance: none;
+    flex-shrink: 0;
+}
+
+.toggle-switch:checked {
+    background: var(--accent-color, #007bff);
+}
+
+.toggle-switch::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.toggle-switch:checked::before {
+    transform: translateX(26px);
+}
+
+.toggle-switch:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.setting-select {
+    padding: 8px 12px;
+    border: 2px solid var(--border-color, #e9ecef);
+    border-radius: 6px;
+    background: var(--input-bg, white);
+    color: var(--text-primary, #333);
+    font-size: 0.9em;
+    min-width: 160px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.setting-select:focus {
+    outline: none;
+    border-color: var(--accent-color, #007bff);
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+.range-slider {
+    width: 120px;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--slider-bg, #ddd);
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+}
+
+.range-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent-color, #007bff);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+}
+
+.range-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+}
+
+.setting-actions {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.setting-actions .btn {
+    flex: 1;
+    min-width: 140px;
+    padding: 10px 16px;
+    font-size: 0.9em;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.shortcuts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 15px 0;
+    padding: 15px;
+    background: var(--code-bg, #f8f9fa);
+    border-radius: 8px;
+    border: 1px solid var(--border-light, #e9ecef);
+}
+
+.shortcut-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.shortcut-action {
+    font-weight: 500;
+    color: var(--text-primary, #333);
+}
+
+.shortcut-keys {
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+    background: var(--kbd-bg, #e9ecef);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: var(--text-secondary, #495057);
+    border: 1px solid var(--border-color, #ced4da);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: var(--info-bg, rgba(0,123,255,0.05));
+    border-radius: 6px;
+    border-left: 4px solid var(--accent-color, #007bff);
+}
+
+.info-label {
+    font-weight: 500;
+    color: var(--text-primary, #333);
+}
+
+.info-value {
+    font-weight: 600;
+    color: var(--accent-color, #007bff);
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+}
+
+/* Mode sombre pour les paramètres */
+.dark-theme .setting-group {
+    background: var(--dark-card-bg, #2d3748);
+    border-color: var(--dark-border, #4a5568);
+}
+
+.dark-theme .setting-item:hover {
+    background: var(--dark-hover-bg, rgba(255,255,255,0.05));
+}
+
+.dark-theme .setting-select {
+    background: var(--dark-input-bg, #4a5568);
+    border-color: var(--dark-border, #718096);
+    color: var(--dark-text, #e2e8f0);
+}
+
+.dark-theme .shortcuts-grid {
+    background: var(--dark-code-bg, #1a202c);
+    border-color: var(--dark-border, #4a5568);
+}
+
+.dark-theme .shortcut-keys {
+    background: var(--dark-kbd-bg, #4a5568);
+    border-color: var(--dark-border, #718096);
+    color: var(--dark-text-muted, #a0aec0);
+}
+
+.dark-theme .info-item {
+    background: var(--dark-info-bg, rgba(66,153,225,0.1));
+}
+
+/* Responsive pour paramètres */
+@media (max-width: 768px) {
+    .settings-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 15px;
+    }
+    
+    .setting-group {
+        padding: 20px;
+    }
+    
+    .setting-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .setting-item:hover {
+        margin: 0;
+        padding: 15px 0;
+    }
+    
+    .toggle-switch, .setting-select, .range-slider {
+        align-self: flex-end;
+    }
+    
+    .setting-actions {
+        flex-direction: column;
+    }
+    
+    .setting-actions .btn {
+        min-width: auto;
+    }
+    
+    .shortcuts-grid {
+        gap: 8px;
+    }
+    
+    .shortcut-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.toggle-switch {
+    width: 50px;
+    height: 25px;
+    background: #e2e8f0;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.toggle-switch:checked {
+    background: #6366f1;
+}
+
+.toggle-switch:before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    top: 2.5px;
+    left: 2.5px;
+    transition: transform 0.3s ease;
+}
+
+.toggle-switch:checked:before {
+    transform: translateX(25px);
+}
+
+.range-slider {
+    width: 150px;
+    margin-left: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-nav {
+        flex-wrap: wrap;
+    }
+    
+    .library-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .library-filters {
+        justify-content: center;
+    }
+    
+    .manga-library {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+    
+    .reader-header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.75rem;
+    }
+    
+    .reader-controls-left,
+    .reader-controls-right {
+        order: 2;
+    }
+    
+    .reader-title {
+        order: 1;
+    }
+    
+    .chapter-sidebar {
+        width: 100%;
+    }
+    
+    .page-navigation {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav-page-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .page-info {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .progress-bar {
+        width: 100%;
+    }
+    
+    .reader-settings-overlay {
+        width: 100%;
+    }
+    
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mode sombre */
+.dark-mode {
+    background: #1a1a1a;
+    color: white;
+}
+
+.dark-mode .main-content {
+    background: #1a1a1a;
+}
+
+.dark-mode .manga-book {
+    background: #2d2d2d;
+    color: white;
+}
+
+.dark-mode .filter-select {
+    background: #2d2d2d;
+    color: white;
+    border-color: #404040;
+}
+
+.dark-mode .setting-group {
+    background: #2d2d2d;
+    color: white;
+}
+
+.dark-mode .setting-item {
+    border-color: #404040;
+}
+
+/* ===== ÉTATS D'AFFICHAGE ===== */
+.hidden {
+    display: none !important;
+}
+
+.book-reader {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    flex-direction: column;
+}
+
+.book-reader.active {
+    display: flex;
+}
+
+.reader-settings-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+}
+
+.reader-settings-overlay.active {
+    display: flex;
+}
