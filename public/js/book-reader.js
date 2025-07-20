@@ -421,6 +421,18 @@ function updatePageDisplay() {
         pageImg.style.opacity = '1';
         pageLoading.classList.remove('active');
         
+        // Détection d'image verticale (manga)
+        console.log('📏 Dimensions image:', newImg.naturalWidth, 'x', newImg.naturalHeight);
+        
+        // Supprimer les classes existantes
+        pageImg.classList.remove('vertical-image');
+        
+        // Si l'image est plus haute que large, c'est probablement une page manga
+        if (newImg.naturalHeight > newImg.naturalWidth) {
+            pageImg.classList.add('vertical-image');
+            console.log('📖 Image manga verticale détectée - affichage optimisé');
+        }
+        
         // Appliquer les paramètres d'affichage
         applyDisplaySettings();
     };

@@ -476,7 +476,8 @@ body {
     justify-content: center;
     padding: 1rem;
     position: relative;
-    overflow: hidden;
+    overflow: auto; /* Permettre le scroll pour les grandes images */
+    max-height: 100vh;
 }
 
 .manga-page {
@@ -486,6 +487,22 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     transition: all 0.3s ease;
+    /* Optimisation pour les images manga verticales */
+    min-height: 90vh;
+    cursor: grab;
+}
+
+.manga-page:active {
+    cursor: grabbing;
+}
+
+/* Images manga verticales - très grandes pour voir tous les détails */
+.manga-page.vertical-image {
+    min-height: 95vh !important;
+    max-width: none !important;
+    width: auto !important;
+    object-fit: contain !important;
+    object-position: center top;
 }
 
 .page-loading {
@@ -948,6 +965,27 @@ body {
     
     .info-grid {
         grid-template-columns: 1fr;
+    }
+    
+    /* Images manga en mode mobile - encore plus grandes pour voir les détails */
+    .manga-page {
+        min-height: 85vh !important;
+        max-width: 98vw !important;
+    }
+    
+    .manga-page.vertical-image {
+        min-height: 90vh !important;
+        max-width: 95vw !important;
+    }
+    
+    /* Zone de lecture mobile */
+    .reading-area {
+        padding: 0.5rem;
+    }
+    
+    .page-container {
+        padding: 0.5rem;
+        max-height: 95vh;
     }
 }
 

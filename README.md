@@ -4,7 +4,7 @@ Une application web moderne pour scraper et afficher les scans d'animés avec un
 
 ## 🌐 Démos En Ligne
 
-- **✅ Vercel Production** : [anime-reader-o7drjls2x-lucas-tsls-projects.vercel.app](https://anime-reader-o7drjls2x-lucas-tsls-projects.vercel.app) **FONCTIONNEL**
+- **✅ Vercel Production** : [anime-reader-9ct5w8ss5-lucas-tsls-projects.vercel.app](https://anime-reader-9ct5w8ss5-lucas-tsls-projects.vercel.app) **FONCTIONNEL** 🆕
 - **✅ Vercel Alias** : [anime-reader-app.vercel.app](https://anime-reader-app.vercel.app) **FONCTIONNEL**
 - **GitHub Pages (Demo)** : [lucas-tsl.github.io/scrananime](https://lucas-tsl.github.io/scrananime) ✅ **FONCTIONNEL**
 
@@ -16,6 +16,9 @@ Une application web moderne pour scraper et afficher les scans d'animés avec un
 
 ### 📖 Interface de Lecture
 - **Mode Livre** : Expérience de lecture immersive
+- **🆕 Images Manga Optimisées** : Affichage grande taille pour voir tous les détails
+- **🆕 Détection Automatique** : Images verticales agrandies automatiquement
+- **🆕 Scroll Intelligent** : Navigation fluide dans les pages haute résolution
 - Navigation fluide entre les pages et chapitres
 - Interface responsive pour tous les appareils
 - Design moderne et épuré
@@ -31,6 +34,9 @@ Une application web moderne pour scraper et afficher les scans d'animés avec un
 - Zoom et ajustement des images
 
 #### 🖼️ Images
+- **🆕 Affichage Grande Taille** : Images manga jusqu'à 95vh pour les détails
+- **🆕 Détection Verticale** : Optimisation automatique des pages manga
+- **🆕 Mode Scroll** : Navigation fluide dans les images haute résolution
 - Qualité d'affichage configurable
 - Préchargement intelligent
 - Compression adaptive
@@ -125,9 +131,9 @@ npm start
 ✅ **Local Development** - Serveur Express complet  
 
 ### 🎯 URLs de Production
-- **Interface principale** : https://anime-reader-app.vercel.app
-- **API endpoint** : https://anime-reader-app.vercel.app/api/mangas
-- **Health check** : https://anime-reader-app.vercel.app/health
+- **Interface principale** : https://anime-reader-9ct5w8ss5-lucas-tsls-projects.vercel.app
+- **API endpoint** : https://anime-reader-9ct5w8ss5-lucas-tsls-projects.vercel.app/api/mangas
+- **Health check** : https://anime-reader-9ct5w8ss5-lucas-tsls-projects.vercel.app/health
 
 ## 📁 Structure du Projet```📦 scrap-anime/├── 📂 api/│   └── index.js              # Fonction serverless Vercel├── 📂 css/│   └── reader.css           # Styles unifiés├── 📂 js/│   └── book-reader.js       # Logique frontend├── 📂 lib/│   └── DirectAnimeSamaScraper.js # Scraper personnalisé├── 📄 book.html             # Interface principale├── 📄 server.js             # Serveur Express local├── 📄 vercel.json           # Configuration Vercel└── 📄 package.json          # Dépendances et scripts```## 🔧 Configuration### Variables d'Environnement```envNODE_ENV=production           # Environnement
 RATE_LIMIT=100               # Limite de requêtes par IP
@@ -180,6 +186,13 @@ Vérification de l'état du service.
 - [ ] 👥 Fonctionnalités sociales (favoris, commentaires)
 
 ## 📝 Changelog
+
+### v2.1.0 (2025-07-20) 🆕
+- 🖼️ **Images Manga Optimisées** : Affichage grande taille (95vh) pour voir tous les détails
+- 🔍 **Détection Automatique** : Images verticales identifiées et optimisées automatiquement
+- 📱 **Mode Scroll Intelligent** : Navigation fluide dans les pages haute résolution
+- 📲 **Responsive Mobile** : Affichage optimisé pour tous les appareils
+- 🎮 **UX Améliorée** : Curseurs interactifs et feedback visuel
 
 ### v2.0.0 (2025-07-20)
 - 🚀 Déploiement Vercel serverless
