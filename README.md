@@ -1,48 +1,27 @@
-# 🎌 Anime Scans Reader
+# 🎌 Scrananime - Lecteur de Manga Moderne
 
-Un lecteur de manga en ligne moderne avec interface livre, développé en Node.js et vanilla JavaScript.
+Un lecteur de manga en ligne avec interface livre, développé en Node.js et vanilla JavaScript.
 
-![Anime Scans Reader](https://img.shields.io/badge/Version-2.0.0-blue.svg)
+![Scrananime](https://img.shields.io/badge/Version-2.0.0-blue.svg)
 ![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)
 ![Express](https://img.shields.io/badge/Express-4.x-red.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-## ✨ Fonctionnalités
+## 🚀 Installation Rapide
 
-### 📖 **Lecture Immersive**
-- **Interface livre** avec navigation fluide
-- **Mode plein écran** pour une expérience cinématique
-- **Navigation au clavier** (flèches, espace, etc.)
-- **Ajustement automatique** des images (largeur, hauteur, original)
-- **Zoom et luminosité** configurables
+```bash
+# Cloner le repository
+git clone https://github.com/Lucas-tsl/scrananime.git
+cd scrananime
 
-### 🎨 **Interface Moderne**
-- **Design responsive** optimisé mobile/desktop
-- **Mode sombre** pour lecture nocturne
-- **Animations fluides** et transitions élégantes
-- **7 sections de paramètres** complètement configurables
-- **Plus de 20 options** de personnalisation
+# Installer les dépendances
+npm install
 
-### 📚 **Gestion Avancée**
-- **Bibliothèque organisée** avec couvertures et statistiques
-- **Système de favoris** avec étoiles
-- **Historique de lecture** automatique
-- **Export/Import** de toutes les données personnelles
-- **Recherche et filtres** intégrés
+# Démarrer le serveur
+npm start
+```
 
-### ⚡ **Performance**
-- **Cache intelligent** avec gestion automatique
-- **Préchargement** des pages suivantes
-- **Scraping optimisé** avec limite de taux
-- **API RESTful** documentée
-- **Gestion d'erreurs** robuste
-
-## 🚀 Installation
-
-### Prérequis
-- Node.js 18+ 
-- npm ou yarn
-
-### Installation rapideime Scans Reader - Version Épurée
+**Accès** : http://localhost:3000ime Scans Reader - Version Épurée
 
 ## 📋 Description
 
