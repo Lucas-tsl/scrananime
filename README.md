@@ -1,4 +1,98 @@
-# 📚 Scraper Animé - Lecteur de Mangas en LigneUne application web moderne pour scraper et afficher les scans d'animés avec une interface de lecture type livre.## 🌐 Démos En Ligne- **Production (Vercel)** : [scrap-anime-l2ondhrc7-lucas-tsls-projects.vercel.app](https://scrap-anime-l2ondhrc7-lucas-tsls-projects.vercel.app)- **GitHub Pages (Demo)** : [lucas-tsl.github.io/scrananime](https://lucas-tsl.github.io/scrananime)## ✨ Fonctionnalités### 🎯 Scraping Intelligent- Support de 6 mangas populaires : One Piece, Naruto, Dragon Ball Super, My Hero Academia, Jujutsu Kaisen, Demon Slayer- Limitation configurable du nombre de chapitres scrapés- Cache automatique pour des performances optimales- API RESTful pour l'intégration### 📖 Interface de Lecture- **Mode Livre** : Expérience de lecture immersive- Navigation fluide entre les pages et chapitres- Interface responsive pour tous les appareils- Design moderne et épuré### ⚙️ Paramètres Avancés (20+ Options)#### 🎨 Apparence- Thèmes sombre/clair avec basculement automatique- Ajustement de la luminosité et du contraste- Personnalisation des couleurs d'interface#### 📚 Lecture- Sens de lecture (gauche-droite / droite-gauche)- Mode plein écran automatique- Zoom et ajustement des images#### 🖼️ Images- Qualité d'affichage configurable- Préchargement intelligent- Compression adaptive#### ⚡ Performance- Gestion du cache navigateur- Optimisation de la bande passante- Préchargement des chapitres#### ⌨️ Raccourcis Clavier- Navigation rapide (flèches, espace, etc.)- Raccourcis personnalisables- Mode navigation avancée#### 💾 Gestion des Données- Synchronisation des préférences- Sauvegarde automatique des positions de lecture- Export/Import des paramètres#### ❓ Aide & Support- Guide d'utilisation intégré- FAQ interactive- Informations de version## 🛠️ Technologies### Backend- **Node.js** + **Express.js** (Serverless sur Vercel)- **Cheerio** pour le parsing HTML- **Puppeteer** pour le contenu dynamique- **DirectAnimeSamaScraper** personnalisé### Frontend- **HTML5** / **CSS3** / **JavaScript ES6+**- Design responsive avec CSS Grid/Flexbox- Interface utilisateur moderne et intuitive### Sécurité & Performance- **Helmet.js** pour les en-têtes de sécurité- **CORS** configuré- Rate limiting intégré- Cache intelligent multi-niveaux## 🚀 Déploiement### Vercel (Production)```bash# Installation et connexionnpm install -g vercelvercel login# Déploiementvercel --prod```### Local```bash# Installation des dépendancesnpm install# Démarrage du serveur de développementnpm start# L'application sera accessible sur http://localhost:3000```## 📁 Structure du Projet```📦 scrap-anime/├── 📂 api/│   └── index.js              # Fonction serverless Vercel├── 📂 css/│   └── reader.css           # Styles unifiés├── 📂 js/│   └── book-reader.js       # Logique frontend├── 📂 lib/│   └── DirectAnimeSamaScraper.js # Scraper personnalisé├── 📄 book.html             # Interface principale├── 📄 server.js             # Serveur Express local├── 📄 vercel.json           # Configuration Vercel└── 📄 package.json          # Dépendances et scripts```## 🔧 Configuration### Variables d'Environnement```envNODE_ENV=production           # Environnement
+# 📚 Scraper Animé - Lecteur de Mangas en Ligne
+
+Une application web moderne pour scraper et afficher les scans d'animés avec une interface de lecture type livre.
+
+## 🌐 Démos En Ligne
+
+- **Production (Vercel)** : [scrap-anime-l2ondhrc7-lucas-tsls-projects.vercel.app](https://scrap-anime-l2ondhrc7-lucas-tsls-projects.vercel.app)
+- **GitHub Pages (Demo)** : [lucas-tsl.github.io/scrananime](https://lucas-tsl.github.io/scrananime)
+
+## ✨ Fonctionnalités### 🎯 Scraping Intelligent
+- Support de 6 mangas populaires : One Piece, Naruto, Dragon Ball Super, My Hero Academia, Jujutsu Kaisen, Demon Slayer
+- Limitation configurable du nombre de chapitres scrapés
+- Cache automatique pour des performances optimales
+- API RESTful pour l'intégration
+
+### 📖 Interface de Lecture
+- **Mode Livre** : Expérience de lecture immersive
+- Navigation fluide entre les pages et chapitres
+- Interface responsive pour tous les appareils
+- Design moderne et épuré
+
+### ⚙️ Paramètres Avancés (20+ Options)#### 🎨 Apparence
+- Thèmes sombre/clair avec basculement automatique
+- Ajustement de la luminosité et du contraste
+- Personnalisation des couleurs d'interface
+
+#### 📚 Lecture
+- Sens de lecture (gauche-droite / droite-gauche)
+- Mode plein écran automatique
+- Zoom et ajustement des images
+
+#### 🖼️ Images
+- Qualité d'affichage configurable
+- Préchargement intelligent
+- Compression adaptive
+
+#### ⚡ Performance
+- Gestion du cache navigateur
+- Optimisation de la bande passante
+- Préchargement des chapitres
+
+#### ⌨️ Raccourcis Clavier
+- Navigation rapide (flèches, espace, etc.)
+- Raccourcis personnalisables
+- Mode navigation avancée
+
+#### 💾 Gestion des Données
+- Synchronisation des préférences
+- Sauvegarde automatique des positions de lecture
+- Export/Import des paramètres
+
+#### ❓ Aide & Support
+- Guide d'utilisation intégré
+- FAQ interactive
+- Informations de version
+
+## 🛠️ Technologies### Backend
+- **Node.js** + **Express.js** (Serverless sur Vercel)
+- **Cheerio** pour le parsing HTML
+- **Puppeteer** pour le contenu dynamique
+- **DirectAnimeSamaScraper** personnalisé
+
+### Frontend
+- **HTML5** / **CSS3** / **JavaScript ES6+**
+- Design responsive avec CSS Grid/Flexbox
+- Interface utilisateur moderne et intuitive
+
+### Sécurité & Performance
+- **Helmet.js** pour les en-têtes de sécurité
+- **CORS** configuré
+- Rate limiting intégré
+- Cache intelligent multi-niveaux
+
+## 🚀 Déploiement### Vercel (Production)
+```bash
+# Installation et connexion
+npm install -g vercel
+vercel login
+
+# Déploiement
+vercel --prod
+```
+
+### Local
+```bash
+# Installation des dépendances
+npm install
+
+# Démarrage du serveur de développement
+npm start
+
+# L'application sera accessible sur http://localhost:3000
+```
+
+## 📁 Structure du Projet```📦 scrap-anime/├── 📂 api/│   └── index.js              # Fonction serverless Vercel├── 📂 css/│   └── reader.css           # Styles unifiés├── 📂 js/│   └── book-reader.js       # Logique frontend├── 📂 lib/│   └── DirectAnimeSamaScraper.js # Scraper personnalisé├── 📄 book.html             # Interface principale├── 📄 server.js             # Serveur Express local├── 📄 vercel.json           # Configuration Vercel└── 📄 package.json          # Dépendances et scripts```## 🔧 Configuration### Variables d'Environnement```envNODE_ENV=production           # Environnement
 RATE_LIMIT=100               # Limite de requêtes par IP
 CACHE_DURATION=3600          # Durée du cache (secondes)
 ```
