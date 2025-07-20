@@ -4,8 +4,9 @@ Une application web moderne pour scraper et afficher les scans d'animés avec un
 
 ## 🌐 Démos En Ligne
 
-- **Production (Vercel)** : [scrap-anime-l2ondhrc7-lucas-tsls-projects.vercel.app](https://scrap-anime-l2ondhrc7-lucas-tsls-projects.vercel.app)
-- **GitHub Pages (Demo)** : [lucas-tsl.github.io/scrananime](https://lucas-tsl.github.io/scrananime)
+- **✅ Vercel Production** : [anime-reader-o7drjls2x-lucas-tsls-projects.vercel.app](https://anime-reader-o7drjls2x-lucas-tsls-projects.vercel.app) **FONCTIONNEL**
+- **✅ Vercel Alias** : [anime-reader-app.vercel.app](https://anime-reader-app.vercel.app) **FONCTIONNEL**
+- **GitHub Pages (Demo)** : [lucas-tsl.github.io/scrananime](https://lucas-tsl.github.io/scrananime) ✅ **FONCTIONNEL**
 
 ## ✨ Fonctionnalités### 🎯 Scraping Intelligent
 - Support de 6 mangas populaires : One Piece, Naruto, Dragon Ball Super, My Hero Academia, Jujutsu Kaisen, Demon Slayer
@@ -71,7 +72,32 @@ Une application web moderne pour scraper et afficher les scans d'animés avec un
 - Rate limiting intégré
 - Cache intelligent multi-niveaux
 
-## 🚀 Déploiement### Vercel (Production)
+## 🚀 Déploiement
+
+### ⚠️ Note sur Vercel
+Vercel a activé une protection d'authentification. Pour un accès public :
+
+**Option 1 - Utilisation locale** (recommandée) :
+```bash
+# Clone et installation
+git clone https://github.com/Lucas-tsl/scrananime.git
+cd scrananime
+npm install
+npm start
+
+# L'application sera accessible sur http://localhost:3000
+```
+
+**Option 2 - GitHub Pages** (demo data) :
+- URL directe : [lucas-tsl.github.io/scrananime](https://lucas-tsl.github.io/scrananime)
+- Interface complète fonctionnelle
+
+**Option 3 - Vercel** (production) :
+- URL directe : [anime-reader-app.vercel.app](https://anime-reader-app.vercel.app)
+- API complète et interface fonctionnelle
+- Déploiement serverless optimisé
+
+### Déploiement Vercel
 ```bash
 # Installation et connexion
 npm install -g vercel
@@ -81,7 +107,7 @@ vercel login
 vercel --prod
 ```
 
-### Local
+### Développement Local
 ```bash
 # Installation des dépendances
 npm install
@@ -91,6 +117,17 @@ npm start
 
 # L'application sera accessible sur http://localhost:3000
 ```
+
+## 🚀 Status de Déploiement
+
+✅ **GitHub Pages** - Demo avec données statiques  
+✅ **Vercel Production** - API complète + Interface  
+✅ **Local Development** - Serveur Express complet  
+
+### 🎯 URLs de Production
+- **Interface principale** : https://anime-reader-app.vercel.app
+- **API endpoint** : https://anime-reader-app.vercel.app/api/mangas
+- **Health check** : https://anime-reader-app.vercel.app/health
 
 ## 📁 Structure du Projet```📦 scrap-anime/├── 📂 api/│   └── index.js              # Fonction serverless Vercel├── 📂 css/│   └── reader.css           # Styles unifiés├── 📂 js/│   └── book-reader.js       # Logique frontend├── 📂 lib/│   └── DirectAnimeSamaScraper.js # Scraper personnalisé├── 📄 book.html             # Interface principale├── 📄 server.js             # Serveur Express local├── 📄 vercel.json           # Configuration Vercel└── 📄 package.json          # Dépendances et scripts```## 🔧 Configuration### Variables d'Environnement```envNODE_ENV=production           # Environnement
 RATE_LIMIT=100               # Limite de requêtes par IP
