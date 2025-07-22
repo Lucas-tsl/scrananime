@@ -176,9 +176,9 @@ async function loadMangaLibrary() {
     try {
         console.log('📚 Chargement de la bibliothèque...');
         
-        // Tenter de charger depuis l'API (serveur local)
+        // Tenter de charger depuis l'API 
         try {
-            const response = await fetch('/api/scans/popular?maxChaptersPerManga=5&maxPagesPerChapter=15');
+            const response = await fetch('/api/mangas?maxChaptersPerManga=5&maxPagesPerChapter=15');
             if (response.ok) {
                 const data = await response.json();
                 if (data.success) {

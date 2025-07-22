@@ -47,12 +47,12 @@ class DirectAnimeSamaScraper {
             },
             'attack-on-titan': { 
                 name: 'Attack on Titan', 
-                url: '/catalogue/attack-on-titan/scan/vf/',
+                url: '/catalogue/shingeki-no-kyojin/scan/vf/',
                 maxChapters: 139 
             },
-            'dragon-ball': { 
-                name: 'Dragon Ball', 
-                url: '/catalogue/dragon-ball/scan/vf/',
+            'dragon-ball-super': { 
+                name: 'Dragon Ball Super', 
+                url: '/catalogue/dragon-ball-super/scan/vf/',
                 maxChapters: 519 
             }
         };
@@ -142,8 +142,8 @@ class DirectAnimeSamaScraper {
             'one-piece': 'One%20Piece',
             'demon-slayer': 'Demon%20Slayer',
             'my-hero-academia': 'My%20Hero%20Academia',
-            'attack-on-titan': 'Attack%20on%20Titan',
-            'dragon-ball': 'Dragon%20Ball'
+            'attack-on-titan': 'Shingeki%20no%20Kyojin',
+            'dragon-ball-super': 'Dragon%20Ball%20Super'
         };
         
         return folderMap[mangaId] || 'Naruto';
