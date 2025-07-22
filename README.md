@@ -4,12 +4,12 @@ Une application web moderne pour scraper et afficher les scans d'animés avec un
 
 ## 🌐 Démos En Ligne
 
-- **✅ Vercel Production** : [anime-reader-9ct5w8ss5-lucas-tsls-projects.vercel.app](https://anime-reader-9ct5w8ss5-lucas-tsls-projects.vercel.app) **FONCTIONNEL** 🆕
+- **✅ Vercel Production** : [anime-reader-nf945dbca-lucas-tsls-projects.vercel.app](https://anime-reader-nf945dbca-lucas-tsls-projects.vercel.app) **FONCTIONNEL** 🆕
 - **✅ Vercel Alias** : [anime-reader-app.vercel.app](https://anime-reader-app.vercel.app) **FONCTIONNEL**
 - **GitHub Pages (Demo)** : [lucas-tsl.github.io/scrananime](https://lucas-tsl.github.io/scrananime) ✅ **FONCTIONNEL**
 
 ## ✨ Fonctionnalités### 🎯 Scraping Intelligent
-- Support de 6 mangas populaires : One Piece, Naruto, Dragon Ball Super, My Hero Academia, Jujutsu Kaisen, Demon Slayer
+- Support de 6 mangas populaires : One Piece, Naruto, Dragon Ball Super, My Hero Academia, Attack on Titan, Demon Slayer
 - Limitation configurable du nombre de chapitres scrapés
 - Cache automatique pour des performances optimales
 - API RESTful pour l'intégration
