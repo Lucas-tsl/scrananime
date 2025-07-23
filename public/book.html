@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎌 Anime Scans Reader - Bibliothèque de Lecture</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Scrananime">
+    <link rel="apple-touch-icon" href="images/icon-192.png">
+    
+    <!-- Styles -->
     <link rel="stylesheet" href="./css/reader.css">
+    <link rel="stylesheet" href="./css/themes.css">
+    <link rel="stylesheet" href="./css/enhancements.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -483,5 +495,15 @@
 
     <script src="./js/responsive-utils.js"></script>
     <script src="./js/book-reader.js"></script>
+    
+    <!-- PWA et Gestionnaires avancés -->
+    <script src="./js/pwa-manager.js"></script>
+    <script src="./js/gesture-manager.js"></script>
+    <script src="./js/search-manager.js"></script>
+    <script src="./js/performance-manager.js"></script>
+    <script src="./js/theme-manager.js"></script>
+    
+    <!-- Initialisateur principal -->
+    <script src="./js/app-initializer.js"></script>
 </body>
 </html>
