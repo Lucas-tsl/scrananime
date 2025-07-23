@@ -104,10 +104,102 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeSettings();
     initializeAdvancedSettings();
     setupEventListeners();
+    setupResponsiveListeners();
     loadMangaLibrary();
     loadReadingHistory();
     loadBookmarks();
 });
+
+// Configuration responsive
+function setupResponsiveListeners() {
+    // Écouter les changements de breakpoint
+    window.addEventListener('breakpointchange', (e) => {
+        console.log('📱 Breakpoint changé:', e.detail.breakpoint);
+        adjustLayoutForBreakpoint(e.detail.breakpoint);
+    });
+    
+    // Ajuster la layout au redimensionnement
+    window.addEventListener('resize', debounce(() => {
+        adjustReaderLayout();
+    }, 150));
+}
+
+// Ajuster la layout selon le breakpoint
+function adjustLayoutForBreakpoint(breakpoint) {
+    const reader = document.getElementById('book-reader');
+    if (!reader) return;
+    
+    // Ajuster les contrôles selon l'écran
+    switch (breakpoint) {
+        case 'mobile':
+            optimizeMobileControls();
+            break;
+        case 'tablet':
+            optimizeTabletControls();
+            break;
+        case 'desktop':
+            optimizeDesktopControls();
+            break;
+    }
+}
+
+// Optimisations mobiles
+function optimizeMobileControls() {
+    const zoomControls = document.querySelector('.zoom-controls');
+    if (zoomControls) {
+        zoomControls.style.flexDirection = 'row';
+        zoomControls.style.top = '10px';
+        zoomControls.style.right = '10px';
+    }
+    
+    const chapterSidebar = document.querySelector('.chapter-sidebar');
+    if (chapterSidebar) {
+        chapterSidebar.style.width = '100%';
+    }
+}
+
+// Optimisations tablette
+function optimizeTabletControls() {
+    const zoomControls = document.querySelector('.zoom-controls');
+    if (zoomControls) {
+        zoomControls.style.flexDirection = 'column';
+        zoomControls.style.top = '15px';
+        zoomControls.style.right = '15px';
+    }
+    
+    const chapterSidebar = document.querySelector('.chapter-sidebar');
+    if (chapterSidebar) {
+        chapterSidebar.style.width = '280px';
+    }
+}
+
+// Optimisations desktop
+function optimizeDesktopControls() {
+    const zoomControls = document.querySelector('.zoom-controls');
+    if (zoomControls) {
+        zoomControls.style.flexDirection = 'column';
+        zoomControls.style.top = '20px';
+        zoomControls.style.right = '20px';
+    }
+    
+    const chapterSidebar = document.querySelector('.chapter-sidebar');
+    if (chapterSidebar) {
+        chapterSidebar.style.width = '350px';
+    }
+}
+
+// Debounce utility
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
 
 // Initialiser les paramètres
 function initializeSettings() {
@@ -488,8 +580,10 @@ function initializeZoomControls() {
     zoomOutBtn.addEventListener('click', () => zoomOut());
     zoomResetBtn.addEventListener('click', () => resetZoom());
     
-    // Zoom avec la molette
-    imageContainer.addEventListener('wheel', handleWheelZoom, { passive: false });
+    // Zoom avec la molette (seulement sur desktop)
+    if (window.innerWidth > 768) {
+        imageContainer.addEventListener('wheel', handleWheelZoom, { passive: false });
+    }
     
     // Système de drag pour parcourir l'image zoomée
     imageContainer.addEventListener('mousedown', startDrag);
@@ -497,23 +591,76 @@ function initializeZoomControls() {
     imageContainer.addEventListener('mouseup', endDrag);
     imageContainer.addEventListener('mouseleave', endDrag);
     
-    // Support tactile pour mobile
+    // Support tactile pour mobile avec gestion responsive
     imageContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
     imageContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
     imageContainer.addEventListener('touchend', handleTouchEnd, { passive: false });
     
-    console.log('✅ Contrôles de zoom initialisés');
+    // Ajuster les contrôles selon l'écran
+    adjustZoomControlsForDevice();
+    
+    console.log('✅ Contrôles de zoom initialisés (responsive)');
+}
+
+// Ajuster les contrôles de zoom selon l'appareil
+function adjustZoomControlsForDevice() {
+    const zoomControls = document.querySelector('.zoom-controls');
+    if (!zoomControls) return;
+    
+    const isMobile = window.innerWidth <= 768;
+    const isTablet = window.innerWidth > 768 && window.innerWidth <= 992;
+    
+    if (isMobile) {
+        // Mobile : contrôles horizontaux, plus petits
+        zoomControls.style.flexDirection = 'row';
+        zoomControls.style.top = '10px';
+        zoomControls.style.right = '10px';
+        zoomControls.style.padding = '4px';
+        
+        const zoomBtns = zoomControls.querySelectorAll('.zoom-btn');
+        zoomBtns.forEach(btn => {
+            btn.style.width = '32px';
+            btn.style.height = '32px';
+            btn.style.fontSize = '0.9rem';
+        });
+    } else if (isTablet) {
+        // Tablette : taille intermédiaire
+        zoomControls.style.flexDirection = 'column';
+        zoomControls.style.top = '15px';
+        zoomControls.style.right = '15px';
+        zoomControls.style.padding = '6px';
+        
+        const zoomBtns = zoomControls.querySelectorAll('.zoom-btn');
+        zoomBtns.forEach(btn => {
+            btn.style.width = '38px';
+            btn.style.height = '38px';
+            btn.style.fontSize = '1.1rem';
+        });
+    } else {
+        // Desktop : taille normale
+        zoomControls.style.flexDirection = 'column';
+        zoomControls.style.top = '20px';
+        zoomControls.style.right = '20px';
+        zoomControls.style.padding = '8px';
+        
+        const zoomBtns = zoomControls.querySelectorAll('.zoom-btn');
+        zoomBtns.forEach(btn => {
+            btn.style.width = '40px';
+            btn.style.height = '40px';
+            btn.style.fontSize = '1.2rem';
+        });
+    }
 }
 
 // Zoomer
 function zoomIn() {
-    currentZoom = Math.min(currentZoom * 1.25, 5); // Max 5x
+    currentZoom = Math.min(currentZoom * 1.25, 10); // Max 10x (augmenté de 5x à 10x)
     applyZoom();
 }
 
 // Dézoomer  
 function zoomOut() {
-    currentZoom = Math.max(currentZoom / 1.25, 0.5); // Min 0.5x
+    currentZoom = Math.max(currentZoom / 1.25, 0.25); // Min 0.25x (réduit pour plus de possibilités)
     applyZoom();
 }
 
@@ -543,8 +690,14 @@ function applyZoom() {
     // Mettre à jour l'affichage du niveau de zoom
     zoomLevel.textContent = Math.round(currentZoom * 100) + '%';
     
-    // Appliquer la transformation
+    // Centrer l'image et appliquer la transformation
     pageImg.style.transform = `scale(${currentZoom}) translate(${imageOffsetX}px, ${imageOffsetY}px)`;
+    pageImg.style.transformOrigin = 'center center';
+    
+    // Assurer le centrage du container
+    imageContainer.style.display = 'flex';
+    imageContainer.style.alignItems = 'center';
+    imageContainer.style.justifyContent = 'center';
     
     // Gérer les classes CSS
     if (currentZoom > 1) {
@@ -553,9 +706,13 @@ function applyZoom() {
     } else {
         imageContainer.classList.remove('zoomed');
         pageImg.classList.remove('zoomed');
+        // Reset position quand zoom = 1
+        imageOffsetX = 0;
+        imageOffsetY = 0;
+        pageImg.style.transform = `scale(${currentZoom})`;
     }
     
-    console.log('🔍 Zoom appliqué:', Math.round(currentZoom * 100) + '%');
+    console.log('🔍 Zoom appliqué:', Math.round(currentZoom * 100) + '%', 'Offset:', imageOffsetX, imageOffsetY);
 }
 
 // Zoom avec la molette de souris
@@ -563,7 +720,7 @@ function handleWheelZoom(e) {
     e.preventDefault();
     
     const delta = e.deltaY > 0 ? 0.9 : 1.1;
-    currentZoom = Math.max(0.5, Math.min(5, currentZoom * delta));
+    currentZoom = Math.max(0.25, Math.min(10, currentZoom * delta)); // Min 0.25x, Max 10x
     
     applyZoom();
 }
@@ -593,8 +750,14 @@ function drag(e) {
     const deltaX = e.clientX - dragStartX;
     const deltaY = e.clientY - dragStartY;
     
-    imageOffsetX = imageStartX + deltaX / currentZoom;
-    imageOffsetY = imageStartY + deltaY / currentZoom;
+    // Calculer les nouveaux offsets
+    const newOffsetX = imageStartX + deltaX / currentZoom;
+    const newOffsetY = imageStartY + deltaY / currentZoom;
+    
+    // Limiter le déplacement pour éviter de sortir complètement de l'écran
+    const maxOffset = 100; // pixels
+    imageOffsetX = Math.max(-maxOffset, Math.min(maxOffset, newOffsetX));
+    imageOffsetY = Math.max(-maxOffset, Math.min(maxOffset, newOffsetY));
     
     applyZoom();
     e.preventDefault();
@@ -638,8 +801,13 @@ function handleTouchMove(e) {
         const deltaX = touch.clientX - dragStartX;
         const deltaY = touch.clientY - dragStartY;
         
-        imageOffsetX = imageStartX + deltaX / currentZoom;
-        imageOffsetY = imageStartY + deltaY / currentZoom;
+        // Calculer les nouveaux offsets avec limitation
+        const newOffsetX = imageStartX + deltaX / currentZoom;
+        const newOffsetY = imageStartY + deltaY / currentZoom;
+        
+        const maxOffset = 100; // pixels
+        imageOffsetX = Math.max(-maxOffset, Math.min(maxOffset, newOffsetX));
+        imageOffsetY = Math.max(-maxOffset, Math.min(maxOffset, newOffsetY));
         
         applyZoom();
         e.preventDefault();
@@ -928,9 +1096,41 @@ function handleKeyboardNavigation(e) {
 
 // ===== FONCTIONS UTILITAIRES =====
 function adjustReaderLayout() {
-    // Ajuster la mise en page selon la taille d'écran
-    if (window.innerWidth <= 768) {
-        document.getElementById('chapter-sidebar').classList.remove('open');
+    // Utiliser le gestionnaire responsive si disponible
+    if (window.responsiveManager) {
+        window.responsiveManager.adjustReaderLayout();
+        return;
+    }
+    
+    // Fallback si le gestionnaire n'est pas disponible
+    const reader = document.getElementById('book-reader');
+    if (!reader || reader.classList.contains('hidden')) return;
+    
+    const isMobile = window.innerWidth <= 768;
+    const pageContainer = document.querySelector('.page-container');
+    const pageImg = document.getElementById('current-page');
+    
+    if (!pageContainer || !pageImg) return;
+    
+    if (isMobile) {
+        // Fermer la sidebar sur mobile si ouverte
+        const sidebar = document.getElementById('chapter-sidebar');
+        if (sidebar && sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+        }
+        
+        // Ajuster les dimensions de l'image
+        const vh = window.innerHeight;
+        const headerHeight = document.querySelector('.reader-header')?.offsetHeight || 80;
+        const navHeight = document.querySelector('.page-navigation')?.offsetHeight || 80;
+        const availableHeight = vh - headerHeight - navHeight - 40;
+        
+        pageImg.style.maxHeight = `${availableHeight}px`;
+        pageImg.style.maxWidth = 'calc(100vw - 2rem)';
+    } else {
+        // Desktop/tablet - réinitialiser les styles
+        pageImg.style.maxHeight = '';
+        pageImg.style.maxWidth = '';
     }
 }
 
