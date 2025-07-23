@@ -323,6 +323,8 @@ async function loadMangaLibrary() {
 // Afficher la bibliothèque
 function displayMangaLibrary() {
     const container = document.getElementById('manga-library');
+    // DEBUG: Log the manga library to inspect image URLs
+    console.log('[DEBUG] mangasLibrary:', JSON.stringify(mangasLibrary, null, 2));
     
     if (Object.keys(mangasLibrary).length === 0) {
         container.innerHTML = '<div class=\"loading-state\"><p>Aucun manga disponible</p></div>';

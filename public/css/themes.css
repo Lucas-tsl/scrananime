@@ -1,3 +1,128 @@
+/* --- BENTO MENU MODERN --- */
+.main-header {
+    background: rgba(255,255,255,0.10);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    border-radius: 0 0 24px 24px;
+    margin-bottom: 2rem;
+    padding-top: 1.2rem;
+    padding-bottom: 0.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-nav {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255,255,255,0.18);
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    padding: 0.5rem 1.5rem;
+    margin-top: 1rem;
+    position: relative;
+}
+
+.nav-btn {
+    position: relative;
+    background: rgba(255,255,255,0.45);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 14px;
+    padding: 0.7rem 1.4rem;
+    font-size: 1.08rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    outline: none;
+    margin-bottom: 2px;
+}
+.nav-btn:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+.nav-btn:hover, .nav-btn:focus {
+    background: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(79,70,229,0.10);
+}
+.nav-btn.active {
+    background: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(79,70,229,0.13);
+}
+.header-nav::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0.2rem;
+    height: 4px;
+    width: 0;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    border-radius: 2px;
+    transition: left 0.3s cubic-bezier(.4,1.7,.7,1), width 0.3s cubic-bezier(.4,1.7,.7,1);
+    z-index: 1;
+}
+.header-nav .nav-btn.active {
+    z-index: 2;
+}
+.header-nav .nav-btn.active::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(79,70,229,0.13);
+    animation: bento-indicator 0.4s cubic-bezier(.4,1.7,.7,1);
+}
+@keyframes bento-indicator {
+    0% { width: 0; opacity: 0; }
+    60% { width: 80%; opacity: 1; }
+    100% { width: 60%; opacity: 1; }
+}
+
+@media (max-width: 700px) {
+    .main-header {
+        border-radius: 0 0 16px 16px;
+        margin-bottom: 1.2rem;
+        padding-top: 0.7rem;
+    }
+    .header-nav {
+        gap: 0.5rem;
+        padding: 0.3rem 0.5rem;
+    }
+    .nav-btn {
+        font-size: 0.98rem;
+        padding: 0.5rem 0.7rem;
+    }
+}
+@media (max-width: 480px) {
+    .main-header {
+        border-radius: 0 0 10px 10px;
+        margin-bottom: 0.5rem;
+        padding-top: 0.3rem;
+    }
+    .header-nav {
+        flex-wrap: wrap;
+        gap: 0.2rem;
+        padding: 0.2rem 0.2rem;
+    }
+    .nav-btn {
+        font-size: 0.93rem;
+        padding: 0.4rem 0.5rem;
+    }
+}
 /* 🎨 Theme Manager Styles */
 
 :root {

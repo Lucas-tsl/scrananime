@@ -163,12 +163,17 @@ class ThemeManager {
     }
     
     createThemeUI() {
+        // Inject CSS for micro-animations if not already present
+        if (!document.getElementById('theme-animations-css')) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = '/public/css/theme-animations.css';
+            link.id = 'theme-animations-css';
+            document.head.appendChild(link);
+        }
+
         const themeHTML = `
             <div class="theme-customizer" id="theme-customizer">
-                <button class="theme-toggle-btn" id="theme-toggle-btn" title="Personnalisation">
-                    🎨 Thèmes
-                </button>
-                
                 <div class="theme-panel" id="theme-panel">
                     <div class="theme-panel-header">
                         <h3>🎨 Personnalisation</h3>
@@ -370,10 +375,14 @@ class ThemeManager {
     populateThemeGrid() {
         const grid = document.getElementById('theme-grid');
         if (!grid) return;
-        
+
+        // Clear previous cards if any
+        grid.innerHTML = '';
+
         Object.entries(this.themes).forEach(([key, theme]) => {
             const themeCard = document.createElement('div');
             themeCard.className = `theme-card ${key === this.currentTheme ? 'active' : ''}`;
+            themeCard.setAttribute('data-theme', key);
             themeCard.innerHTML = `
                 <div class="theme-preview" style="background: ${theme.colors['--bg-primary']}; border: 2px solid ${theme.colors['--primary-color']};">
                     <div class="theme-preview-header" style="background: ${theme.colors['--bg-secondary']};">
@@ -391,11 +400,28 @@ class ThemeManager {
                     <span class="theme-name">${theme.name}</span>
                 </div>
             `;
-            
+
+            // Micro-animation: pop effect on hover
+            themeCard.addEventListener('mouseenter', () => {
+                if (this.customization.animations !== false) {
+                    themeCard.classList.add('pop-animate');
+                }
+            });
+            themeCard.addEventListener('mouseleave', () => {
+                themeCard.classList.remove('pop-animate');
+            });
+
+            // Micro-animation: bounce effect on click
             themeCard.addEventListener('click', () => {
                 this.selectTheme(key);
+                if (this.customization.animations !== false) {
+                    themeCard.classList.remove('bounce-animate');
+                    // Restart animation
+                    void themeCard.offsetWidth;
+                    themeCard.classList.add('bounce-animate');
+                }
             });
-            
+
             grid.appendChild(themeCard);
         });
     }
