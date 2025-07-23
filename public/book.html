@@ -412,7 +412,19 @@
             <!-- Zone de lecture principale -->
             <div class="reading-area">
                 <div class="page-container">
-                    <img id="current-page" class="manga-page" src="" alt="Page de manga">
+                    <!-- Contrôles de zoom -->
+                    <div class="zoom-controls">
+                        <button class="zoom-btn" id="zoom-in-btn" title="Zoomer">+</button>
+                        <div class="zoom-level" id="zoom-level">100%</div>
+                        <button class="zoom-btn" id="zoom-out-btn" title="Dézoomer">-</button>
+                        <button class="zoom-btn" id="zoom-reset-btn" title="Réinitialiser le zoom">⌂</button>
+                    </div>
+                    
+                    <!-- Container pour l'image avec zoom -->
+                    <div class="image-zoom-container" id="image-container">
+                        <img id="current-page" class="manga-page" src="" alt="Page de manga">
+                    </div>
+                    
                     <div class="page-loading" id="page-loading">
                         <div class="loading-spinner"></div>
                         <p>Chargement de la page...</p>

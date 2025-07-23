@@ -9,6 +9,16 @@ let readingHistory = JSON.parse(localStorage.getItem('readingHistory') || '{}');
 let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
 let settings = JSON.parse(localStorage.getItem('readerSettings') || '{}');
 
+// Variables pour le système de zoom
+let currentZoom = 1;
+let isDragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+let imageStartX = 0;
+let imageStartY = 0;
+let imageOffsetX = 0;
+let imageOffsetY = 0;
+
 // Données de démonstration pour GitHub Pages (quand pas de serveur)
 const demoData = {
     "naruto": {
@@ -372,6 +382,9 @@ function showReader() {
     // Titre et info
     document.getElementById('reader-manga-title').textContent = mangasLibrary[currentManga].info.name;
     
+    // Initialiser les contrôles de zoom
+    initializeZoomControls();
+    
     updatePageDisplay();
 }
 
@@ -450,6 +463,194 @@ function updatePageDisplay() {
     
     // Sauvegarder la progression
     saveReadingProgress();
+    
+    // Réinitialiser le zoom après changement de page
+    resetZoom();
+}
+
+// ===== SYSTÈME DE ZOOM =====
+
+// Initialiser les contrôles de zoom
+function initializeZoomControls() {
+    const zoomInBtn = document.getElementById('zoom-in-btn');
+    const zoomOutBtn = document.getElementById('zoom-out-btn');
+    const zoomResetBtn = document.getElementById('zoom-reset-btn');
+    const imageContainer = document.getElementById('image-container');
+    const pageImg = document.getElementById('current-page');
+    
+    if (!zoomInBtn || !zoomOutBtn || !zoomResetBtn || !imageContainer || !pageImg) {
+        console.warn('⚠️ Éléments de zoom non trouvés');
+        return;
+    }
+    
+    // Boutons de zoom
+    zoomInBtn.addEventListener('click', () => zoomIn());
+    zoomOutBtn.addEventListener('click', () => zoomOut());
+    zoomResetBtn.addEventListener('click', () => resetZoom());
+    
+    // Zoom avec la molette
+    imageContainer.addEventListener('wheel', handleWheelZoom, { passive: false });
+    
+    // Système de drag pour parcourir l'image zoomée
+    imageContainer.addEventListener('mousedown', startDrag);
+    imageContainer.addEventListener('mousemove', drag);
+    imageContainer.addEventListener('mouseup', endDrag);
+    imageContainer.addEventListener('mouseleave', endDrag);
+    
+    // Support tactile pour mobile
+    imageContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
+    imageContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
+    imageContainer.addEventListener('touchend', handleTouchEnd, { passive: false });
+    
+    console.log('✅ Contrôles de zoom initialisés');
+}
+
+// Zoomer
+function zoomIn() {
+    currentZoom = Math.min(currentZoom * 1.25, 5); // Max 5x
+    applyZoom();
+}
+
+// Dézoomer  
+function zoomOut() {
+    currentZoom = Math.max(currentZoom / 1.25, 0.5); // Min 0.5x
+    applyZoom();
+}
+
+// Réinitialiser le zoom
+function resetZoom() {
+    currentZoom = 1;
+    imageOffsetX = 0;
+    imageOffsetY = 0;
+    applyZoom();
+    
+    const imageContainer = document.getElementById('image-container');
+    const pageImg = document.getElementById('current-page');
+    if (imageContainer && pageImg) {
+        imageContainer.classList.remove('zoomed');
+        pageImg.classList.remove('zoomed');
+    }
+}
+
+// Appliquer le zoom
+function applyZoom() {
+    const pageImg = document.getElementById('current-page');
+    const imageContainer = document.getElementById('image-container');
+    const zoomLevel = document.getElementById('zoom-level');
+    
+    if (!pageImg || !imageContainer || !zoomLevel) return;
+    
+    // Mettre à jour l'affichage du niveau de zoom
+    zoomLevel.textContent = Math.round(currentZoom * 100) + '%';
+    
+    // Appliquer la transformation
+    pageImg.style.transform = `scale(${currentZoom}) translate(${imageOffsetX}px, ${imageOffsetY}px)`;
+    
+    // Gérer les classes CSS
+    if (currentZoom > 1) {
+        imageContainer.classList.add('zoomed');
+        pageImg.classList.add('zoomed');
+    } else {
+        imageContainer.classList.remove('zoomed');
+        pageImg.classList.remove('zoomed');
+    }
+    
+    console.log('🔍 Zoom appliqué:', Math.round(currentZoom * 100) + '%');
+}
+
+// Zoom avec la molette de souris
+function handleWheelZoom(e) {
+    e.preventDefault();
+    
+    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+    currentZoom = Math.max(0.5, Math.min(5, currentZoom * delta));
+    
+    applyZoom();
+}
+
+// Début du drag
+function startDrag(e) {
+    if (currentZoom <= 1) return;
+    
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    imageStartX = imageOffsetX;
+    imageStartY = imageOffsetY;
+    
+    const imageContainer = document.getElementById('image-container');
+    if (imageContainer) {
+        imageContainer.classList.add('dragging');
+    }
+    
+    e.preventDefault();
+}
+
+// Pendant le drag
+function drag(e) {
+    if (!isDragging || currentZoom <= 1) return;
+    
+    const deltaX = e.clientX - dragStartX;
+    const deltaY = e.clientY - dragStartY;
+    
+    imageOffsetX = imageStartX + deltaX / currentZoom;
+    imageOffsetY = imageStartY + deltaY / currentZoom;
+    
+    applyZoom();
+    e.preventDefault();
+}
+
+// Fin du drag
+function endDrag() {
+    isDragging = false;
+    
+    const imageContainer = document.getElementById('image-container');
+    if (imageContainer) {
+        imageContainer.classList.remove('dragging');
+    }
+}
+
+// Support tactile - début
+function handleTouchStart(e) {
+    if (e.touches.length === 1 && currentZoom > 1) {
+        // Simple touch pour drag
+        const touch = e.touches[0];
+        isDragging = true;
+        dragStartX = touch.clientX;
+        dragStartY = touch.clientY;
+        imageStartX = imageOffsetX;
+        imageStartY = imageOffsetY;
+        
+        const imageContainer = document.getElementById('image-container');
+        if (imageContainer) {
+            imageContainer.classList.add('dragging');
+        }
+    } else if (e.touches.length === 2) {
+        // Pinch to zoom (futur développement)
+        e.preventDefault();
+    }
+}
+
+// Support tactile - mouvement
+function handleTouchMove(e) {
+    if (e.touches.length === 1 && isDragging && currentZoom > 1) {
+        const touch = e.touches[0];
+        const deltaX = touch.clientX - dragStartX;
+        const deltaY = touch.clientY - dragStartY;
+        
+        imageOffsetX = imageStartX + deltaX / currentZoom;
+        imageOffsetY = imageStartY + deltaY / currentZoom;
+        
+        applyZoom();
+        e.preventDefault();
+    }
+}
+
+// Support tactile - fin
+function handleTouchEnd(e) {
+    if (e.touches.length === 0) {
+        endDrag();
+    }
 }
 
 // Navigation des pages
@@ -707,6 +908,20 @@ function handleKeyboardNavigation(e) {
         case 'C':
             e.preventDefault();
             toggleChapterSidebar();
+            break;
+        case '+':
+        case '=':
+            e.preventDefault();
+            zoomIn();
+            break;
+        case '-':
+        case '_':
+            e.preventDefault();
+            zoomOut();
+            break;
+        case '0':
+            e.preventDefault();
+            resetZoom();
             break;
     }
 }
