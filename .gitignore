@@ -25,7 +25,9 @@ bower_components
 
 # node-wjs
 nw.gyp
-*
+public/*
+!public/js/
+!public/js/theme-manager.js
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
