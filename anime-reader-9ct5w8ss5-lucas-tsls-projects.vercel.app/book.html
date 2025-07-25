@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎌 Anime Scans Reader - Bibliothèque de Lecture</title>
+    <link rel="stylesheet" href="css/reader.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Principal -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-brand">
+                <h1>🎌 Anime Scans Reader</h1>
+                <p>Votre bibliothèque de lecture manga</p>
+            </div>
+            <nav class="header-nav">
+                <button class="nav-btn active" data-tab="library">📚 Bibliothèque</button>
+                <button class="nav-btn" data-tab="reading">📖 Lecture en cours</button>
+                <button class="nav-btn" data-tab="favorites">⭐ Favoris</button>
+                <button class="nav-btn" data-tab="settings">⚙️ Paramètres</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenu Principal -->
+    <main class="main-content">
+        <!-- Onglet Bibliothèque -->
+        <section id="library-tab" class="tab-content active">
+            <div class="container">
+                <div class="library-header">
+                    <h2>📚 Bibliothèque de Mangas</h2>
+                    <div class="library-stats" id="library-stats">
+                        <span class="stat-item">📖 Chargement...</span>
+                    </div>
+                    <div class="library-filters">
+                        <label for="sort-filter" class="sr-only">Trier par</label>
+                        <select id="sort-filter" class="filter-select" title="Options de tri">
+                            <option value="name">Trier par nom</option>
+                            <option value="chapters">Par nombre de chapitres</option>
+                            <option value="recent">Dernière lecture</option>
+                        </select>
+                        <label for="view-mode" class="sr-only">Mode d'affichage</label>
+                        <select id="view-mode" class="filter-select" title="Mode d'affichage">
+                            <option value="grid">Vue grille</option>
+                            <option value="list">Vue liste</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="manga-library" class="manga-library">
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>🔄 Chargement de votre bibliothèque...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Onglet Lecture en cours -->
+        <section id="reading-tab" class="tab-content">
+            <div class="container">
+                <h2>📖 Lecture en cours</h2>
+                <div id="current-reading" class="current-reading">
+                    <p>Aucune lecture en cours</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Onglet Favoris -->
+        <section id="favorites-tab" class="tab-content">
+            <div class="container">
+                <h2>⭐ Vos Favoris</h2>
+                <div id="favorites-list" class="favorites-list">
+                    <p>Aucun favori pour le moment</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Onglet Paramètres -->
+        <section id="settings-tab" class="tab-content">
+            <div class="container">
+                <h2>⚙️ Paramètres et Préférences</h2>
+                
+                <div class="settings-grid">
+                    <!-- Apparence et Thème -->
+                    <div class="setting-group">
+                        <div class="setting-group-header">
+                            <h3>🎨 Apparence et Thème</h3>
+                            <p>Personnalisez l'interface selon vos préférences</p>
+                        </div>
+                        
+                        <label class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Mode sombre</span>
+                                <small class="setting-description">Interface sombre pour une lecture nocturne</small>
+                            </div>
+                            <input type="checkbox" id="dark-mode" class="toggle-switch">
+                        </label>
+
+                        <label class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Mode plein écran par défaut</span>
+                                <small class="setting-description">Ouvrir automatiquement en plein écran</small>
+                            </div>
+                            <input type="checkbox" id="fullscreen-default" class="toggle-switch">
+                        </label>
+
+                        <label class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Animations d'interface</span>
+                                <small class="setting-description">Activer les transitions et animations</small>
+                            </div>
+                            <input type="checkbox" id="animations" class="toggle-switch" checked>
+                        </label>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Taille de la police</span>
+                                <small class="setting-description">Ajuster la taille du texte dans l'interface</small>
+                            </div>
+                            <select id="font-size" class="setting-select" title="Taille de la police">
+                                <option value="small">Petite</option>
+                                <option value="medium" selected>Moyenne</option>
+                                <option value="large">Grande</option>
+                                <option value="xlarge">Très grande</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Lecture et Navigation -->
+                    <div class="setting-group">
+                        <div class="setting-group-header">
+                            <h3>📖 Lecture et Navigation</h3>
+                            <p>Options pour optimiser votre expérience de lecture</p>
+                        </div>
+
+                        <label class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Navigation automatique</span>
+                                <small class="setting-description">Progression automatique des pages</small>
+                            </div>
+                            <input type="checkbox" id="auto-navigation" class="toggle-switch">
+                        </label>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Vitesse de lecture automatique</span>
+                                <small class="setting-description">Durée d'affichage par page : <span id="speed-value">8s</span></small>
+                            </div>
+                            <input type="range" id="reading-speed" min="3" max="20" value="8" class="range-slider" title="Vitesse de lecture">
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Direction de lecture</span>
+                                <small class="setting-description">Sens de navigation des pages</small>
+                            </div>
+                            <select id="reading-direction" class="setting-select" title="Direction de lecture">
+                                <option value="ltr">Gauche vers droite (Occidental)</option>
+                                <option value="rtl">Droite vers gauche (Manga japonais)</option>
+                            </select>
+                        </div>
+
+                        <label class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Navigation au clic</span>
+                                <small class="setting-description">Changer de page en cliquant sur l'image</small>
+                            </div>
+                            <input type="checkbox" id="click-navigation" class="toggle-switch" checked>
+                        </label>
+
+                        <label class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Navigation au défilement</span>
+                                <small class="setting-description">Utiliser la molette pour naviguer</small>
+                            </div>
+                            <input type="checkbox" id="scroll-navigation" class="toggle-switch">
+                        </label>
+                    </div>
+
+                    <!-- Affichage des Images -->
+                    <div class="setting-group">
+                        <div class="setting-group-header">
+                            <h3>🖼️ Affichage des Images</h3>
+                            <p>Contrôles pour l'affichage et la qualité des scans</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Mode d'ajustement par défaut</span>
+                                <small class="setting-description">Comment ajuster les images à l'écran</small>
+                            </div>
+                            <select id="default-fit-mode" class="setting-select" title="Mode d'ajustement">
+                                <option value="contain">Ajuster à l'écran</option>
+                                <option value="width">Ajuster à la largeur</option>
+                                <option value="height">Ajuster à la hauteur</option>
+                                <option value="original">Taille originale</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Qualité des images</span>
+                                <small class="setting-description">Préférence pour la qualité vs vitesse</small>
+                            </div>
+                            <select id="image-quality" class="setting-select" title="Qualité des images">
+                                <option value="high">Haute qualité (plus lent)</option>
+                                <option value="medium" selected>Qualité moyenne</option>
+                                <option value="low">Qualité réduite (plus rapide)</option>
+                            </select>
+                        </div>
+
+                        <label class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Préchargement des pages</span>
+                                <small class="setting-description">Charger les pages suivantes en avance</small>
+                            </div>
+                            <input type="checkbox" id="preload-pages" class="toggle-switch" checked>
+                        </label>
+                    </div>
+
+                    <!-- Données et Confidentialité -->
+                    <div class="setting-group">
+                        <div class="setting-group-header">
+                            <h3>💾 Données et Confidentialité</h3>
+                            <p>Gestion de vos données personnelles et préférences</p>
+                        </div>
+
+                        <label class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Sauvegarder l'historique</span>
+                                <small class="setting-description">Mémoriser les pages lues</small>
+                            </div>
+                            <input type="checkbox" id="save-history" class="toggle-switch" checked>
+                        </label>
+
+                        <label class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Synchronisation des favoris</span>
+                                <small class="setting-description">Synchroniser avec le cloud (futur)</small>
+                            </div>
+                            <input type="checkbox" id="sync-favorites" class="toggle-switch" disabled>
+                        </label>
+
+                        <div class="setting-actions">
+                            <button class="btn btn-secondary" onclick="exportAllData()">
+                                📤 Exporter toutes mes données
+                            </button>
+                            <button class="btn btn-secondary" onclick="importData()">
+                                📥 Importer des données
+                            </button>
+                            <button class="btn btn-warning" onclick="clearAllData()">
+                                🗑️ Effacer toutes les données
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Performance et Cache -->
+                    <div class="setting-group">
+                        <div class="setting-group-header">
+                            <h3>⚡ Performance et Cache</h3>
+                            <p>Options pour optimiser les performances</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Taille du cache</span>
+                                <small class="setting-description">Espace de stockage pour les images</small>
+                            </div>
+                            <select id="cache-size" class="setting-select" title="Taille du cache">
+                                <option value="50">50 MB</option>
+                                <option value="100" selected>100 MB</option>
+                                <option value="200">200 MB</option>
+                                <option value="500">500 MB</option>
+                            </select>
+                        </div>
+
+                        <label class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Mode économie de données</span>
+                                <small class="setting-description">Réduire l'utilisation de bande passante</small>
+                            </div>
+                            <input type="checkbox" id="data-saver" class="toggle-switch">
+                        </label>
+
+                        <div class="setting-actions">
+                            <button class="btn btn-secondary" onclick="clearCache()">
+                                🗂️ Vider le cache
+                            </button>
+                            <button class="btn btn-secondary" onclick="showCacheInfo()">
+                                📊 Informations cache
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Raccourcis Clavier -->
+                    <div class="setting-group">
+                        <div class="setting-group-header">
+                            <h3>⌨️ Raccourcis Clavier</h3>
+                            <p>Personnaliser les raccourcis pour la navigation</p>
+                        </div>
+
+                        <div class="shortcuts-grid">
+                            <div class="shortcut-item">
+                                <span class="shortcut-action">Page suivante</span>
+                                <span class="shortcut-keys">→ Espace Enter</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-action">Page précédente</span>
+                                <span class="shortcut-keys">← Backspace</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-action">Plein écran</span>
+                                <span class="shortcut-keys">F F11</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-action">Menu chapitres</span>
+                                <span class="shortcut-keys">C Tab</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-action">Fermer lecteur</span>
+                                <span class="shortcut-keys">Escape Q</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-action">Paramètres</span>
+                                <span class="shortcut-keys">S Settings</span>
+                            </div>
+                        </div>
+
+                        <label class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Raccourcis personnalisés</span>
+                                <small class="setting-description">Permettre la configuration des touches</small>
+                            </div>
+                            <input type="checkbox" id="custom-shortcuts" class="toggle-switch">
+                        </label>
+                    </div>
+
+                    <!-- Informations et Aide -->
+                    <div class="setting-group">
+                        <div class="setting-group-header">
+                            <h3>ℹ️ Informations et Aide</h3>
+                            <p>À propos de l'application et ressources d'aide</p>
+                        </div>
+
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Version</span>
+                                <span class="info-value">2.0.0</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Mangas disponibles</span>
+                                <span class="info-value" id="total-mangas">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Pages dans l'historique</span>
+                                <span class="info-value" id="total-history">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Favoris</span>
+                                <span class="info-value" id="total-favorites">-</span>
+                            </div>
+                        </div>
+
+                        <div class="setting-actions">
+                            <button class="btn btn-secondary" onclick="showHelp()">
+                                ❓ Guide d'utilisation
+                            </button>
+                            <button class="btn btn-secondary" onclick="showAbout()">
+                                📋 À propos
+                            </button>
+                            <button class="btn btn-secondary" onclick="checkUpdates()">
+                                🔄 Vérifier les mises à jour
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Reader Modal (Mode Livre) -->
+    <div id="book-reader" class="book-reader hidden">
+        <div class="reader-header">
+            <div class="reader-controls-left">
+                <button class="reader-btn" onclick="closeReader()">✕ Fermer</button>
+                <button class="reader-btn" onclick="toggleBookmark()">⭐ Favoris</button>
+            </div>
+            <div class="reader-title">
+                <h3 id="reader-manga-title">Titre du Manga</h3>
+                <span id="reader-chapter-info">Chapitre - Page</span>
+            </div>
+            <div class="reader-controls-right">
+                <button class="reader-btn" onclick="toggleReaderFullscreen()">🔍 Plein écran</button>
+                <button class="reader-btn" onclick="toggleSettings()">⚙️ Paramètres</button>
+            </div>
+        </div>
+
+        <div class="reader-content">
+            <!-- Navigation latérale des chapitres -->
+            <div class="chapter-sidebar" id="chapter-sidebar">
+                <div class="sidebar-header">
+                    <h4>📚 Chapitres</h4>
+                    <button onclick="toggleChapterSidebar()" class="close-sidebar">✕</button>
+                </div>
+                <div id="chapters-navigation" class="chapters-navigation"></div>
+            </div>
+
+            <!-- Zone de lecture principale -->
+            <div class="reading-area">
+                <div class="page-container">
+                    <img id="current-page" class="manga-page" src="book.html" alt="Page de manga">
+                    <div class="page-loading" id="page-loading">
+                        <div class="loading-spinner"></div>
+                        <p>Chargement de la page...</p>
+                    </div>
+                </div>
+
+                <!-- Navigation des pages -->
+                <div class="page-navigation">
+                    <button class="nav-page-btn prev" id="prev-page-btn" onclick="previousPage()">
+                        ⬅️ <span>Précédent</span>
+                    </button>
+                    <div class="page-info">
+                        <span id="page-counter">1 / 1</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="reading-progress"></div>
+                        </div>
+                        <div class="chapter-selector">
+                            <label for="chapter-select" class="sr-only">Sélectionner un chapitre</label>
+                            <select id="chapter-select" onchange="jumpToChapter(this.value)" title="Sélection du chapitre">
+                                <option>Chapitre 1</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="nav-page-btn next" id="next-page-btn" onclick="nextPage()">
+                        <span>Suivant</span> ➡️
+                    </button>
+                </div>
+
+                <!-- Overlay de paramètres -->
+                <div class="reader-settings-overlay hidden" id="reader-settings">
+                    <div class="settings-panel">
+                        <h4>🎨 Paramètres de lecture</h4>
+                        <div class="setting-row">
+                            <label for="fit-mode">Ajustement de l'image:</label>
+                            <select id="fit-mode" onchange="changeFitMode(this.value)" title="Mode d'ajustement de l'image">
+                                <option value="contain">Ajuster à l'écran</option>
+                                <option value="width">Ajuster à la largeur</option>
+                                <option value="height">Ajuster à la hauteur</option>
+                                <option value="original">Taille originale</option>
+                            </select>
+                        </div>
+                        <div class="setting-row">
+                            <label for="zoom-slider">Zoom:</label>
+                            <input type="range" id="zoom-slider" min="0.5" max="3" step="0.1" value="1" onchange="changeZoom(this.value)" title="Niveau de zoom">
+                            <span id="zoom-value">100%</span>
+                        </div>
+                        <div class="setting-row">
+                            <label for="brightness-slider">Luminosité:</label>
+                            <input type="range" id="brightness-slider" min="0.5" max="1.5" step="0.1" value="1" onchange="changeBrightness(this.value)" title="Niveau de luminosité">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/book-reader.js"></script>
+</body>
+</html>
